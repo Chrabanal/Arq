@@ -118,4 +118,5 @@ let sub = this.firebaseSvc.getCollectionsData(path).subscribe ({
   }
 
 }
+
 }

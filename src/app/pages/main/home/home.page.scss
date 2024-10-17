@@ -1,0 +1,13 @@
+.horizontal-scroll {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .logo-container img {
+    width: 100px; /* Ajusta el tamaño según sea necesario */
+    height: auto;
+    margin-right: 15px; /* Espacio entre logos */
+  }
+  
