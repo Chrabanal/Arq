@@ -1,21 +1,21 @@
-<ion-header>
+<ion-header> 
   <ion-toolbar>
     <ion-title>Map</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="map-container">
+  <div class="map-container" id="map">
     <google-map 
-    height="600px" 
-    width="800px" 
-    [options]="options"
-    (mapClick)="onMapClick($event)"> </google-map>
+      height="100%" 
+      width="100%" 
+      [options]="options"
+      (mapClick)="onMapClick($event)">
+    </google-map>
   </div>
-  <div>
-    <p>Latitude: {{ locationData?.lat ?? 'null' }}</p>
-    <p>Longitude: {{ locationData?.lng ?? 'null' }}</p>
-  </div>
-
   
+  <div class="location-info">
+    <p *ngIf="locationData">Tu ubicación: Latitud: {{ locationData.lat }}<br>Longitud: {{ locationData.lng }}</p>
+    <p *ngIf="!locationData">Ubicación no disponible.</p>
+  </div>
 </ion-content>
