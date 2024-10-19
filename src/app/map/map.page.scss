@@ -1,10 +1,68 @@
-.map-container {
-    height: 600px; // Fixed height or adjust as needed
-    width: 100%; // Full width of the parent
+.contenedor-mapa { 
+  height: 600px;
+  width: 100%;
+}
+
+.contenedor-busqueda {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  background-color: rgb(80, 79, 79);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+}
+
+.contenedor-busqueda input {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.contenedor-busqueda button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Espacio entre botones */
+}
+
+.contenedor-busqueda button:last-child {
+  margin-right: 0; /* Eliminar margen del último botón */
+}
+
+.contenedor-busqueda button ion-icon {
+  font-size: 20px;
+  margin-right: 3px; /* Espacio entre ícono y texto (si lo hay) */
+} 
+
+.imagen-super {
+  display: flex;
+  overflow: hidden; 
+  width: 100%; 
+  animation: scroll 10s linear infinite; 
+}
+
+.imagen-super img {
+  width: 50px; 
+  height: auto;
+  margin: 0 5px; 
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%); 
   }
-  
-  .location-info {
-    padding: 16px; // Add padding for better spacing
-    text-align: center; // Center-align text
+  100% {
+    transform: translateX(-100%); 
   }
-  
+}

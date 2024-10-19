@@ -1,21 +1,38 @@
-<ion-header> 
-  <ion-toolbar>
-    <ion-title>Map</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="contenedor-mapa">
+  <div class="contenedor-busqueda">
+    <input 
+      id="autocompletar" 
+      type="text" 
+      placeholder="Buscar" 
+      (keyup.enter)="buscarLugares()">
+      
+    <button (click)="buscarLugares()">
+      <ion-icon name="search-outline"></ion-icon>
+    </button>
+    
+    <button (click)="obtenerDirecciones()">
+      <ion-icon name="navigate-outline"></ion-icon> 
+    </button>
+    
+    <button (click)="irALaUbicacionActual()">
+      <ion-icon name="locate-outline"></ion-icon> 
+    </button>
+  </div>
 
-<ion-content>
-  <div class="map-container" id="map">
-    <google-map 
-      height="100%" 
-      width="100%" 
-      [options]="options"
-      (mapClick)="onMapClick($event)">
-    </google-map>
+  <google-map 
+    height="600px"
+    width="100%"
+    [options]="opcionesMapa"
+    (mapClick)="alHacerClicMapa($event)"
+    (mapInitialized)="alMapaListo($event)">
+  </google-map>
+
+  <div class="imagen-super">
+    <img src="assets/img/Sacuenta.jpg" alt="Acuenta">
+    <img src="assets/img/Sekono.png" alt="Ekono">
+    <img src="assets/img/Slider.png" alt="Lider">
+    <img src="assets/img/Ssanta.png" alt="Santa">
+    <img src="assets/img/Stottus.png" alt="Totus">
+    <img src="assets/img/Soxxo.png" alt="OXXO">
   </div>
-  
-  <div class="location-info">
-    <p *ngIf="locationData">Tu ubicación: Latitud: {{ locationData.lat }}<br>Longitud: {{ locationData.lng }}</p>
-    <p *ngIf="!locationData">Ubicación no disponible.</p>
-  </div>
-</ion-content>
+</div>
