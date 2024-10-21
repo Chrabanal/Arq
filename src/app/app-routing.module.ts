@@ -10,6 +10,7 @@ const routes: Routes = [
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full'
+
   },
   {
     path: 'auth',
@@ -18,10 +19,18 @@ const routes: Routes = [
   {
     path: 'main',
     loadChildren: () => import('./pages/main/main.module').then( m => m.MainPageModule), canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'map',
     loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/main/profile/profile.module').then( m => m.ProfilePageModule)
+
+  },
+
+  
 
 ];
 
