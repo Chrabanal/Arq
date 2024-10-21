@@ -5,9 +5,8 @@
     padding: 10px;
   }
   
-  .logo-container img {
-    width: 100px; /* Ajusta el tamaño según sea necesario */
-    height: auto;
-    margin-right: 15px; /* Espacio entre logos */
-  }
-  
+ion-card{
+ gap: 100px;
+ padding: 20px 0;
+ border-radius: 15px;
+}
