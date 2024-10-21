@@ -1,6 +1,7 @@
 .contenedor-mapa { 
-  height: 600px;
-  width: 100%;
+  height: 60vh;  
+  width: 100%;   
+  position: relative;  
 }
 
 .contenedor-busqueda {
@@ -14,6 +15,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
+  flex-wrap: wrap; 
+  width: auto;
 }
 
 .contenedor-busqueda input {
@@ -33,36 +36,67 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Espacio entre botones */
-}
-
-.contenedor-busqueda button:last-child {
-  margin-right: 0; /* Eliminar margen del último botón */
+  margin-right: 10px;
+  flex-shrink: 0;
 }
 
 .contenedor-busqueda button ion-icon {
   font-size: 20px;
-  margin-right: 3px; /* Espacio entre ícono y texto (si lo hay) */
+  margin-right: 3px; 
 } 
 
 .imagen-super {
   display: flex;
-  overflow: hidden; 
+  justify-content: space-around;
+  overflow: hidden;
   width: 100%; 
-  animation: scroll 10s linear infinite; 
+  padding: 10px;
+  box-sizing: border-box;
+  animation: scroll 10s linear infinite; /* Aplica la animación */
 }
 
 .imagen-super img {
-  width: 50px; 
+  width: 8vw;
   height: auto;
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
+/* Animación para desplazamiento de imágenes */
 @keyframes scroll {
   0% {
     transform: translateX(100%); 
   }
   100% {
     transform: translateX(-100%); 
+  }
+}
+
+/* Media queries para adaptar el diseño a pantallas más pequeñas */
+@media (max-width: 768px) {
+  .contenedor-busqueda {
+    flex-direction: column;
+    align-items: stretch;
+    width: 90%;
+    left: 50%; 
+    transform: translateX(-50%);
+  }
+
+  .contenedor-busqueda input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .contenedor-busqueda button {
+    margin-right: 0;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .contenedor-mapa {
+    height: 50vh; 
+  }
+
+  .imagen-super img {
+    width: 12vw;
   }
 }

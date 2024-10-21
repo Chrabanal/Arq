@@ -1,3 +1,5 @@
+
+
 <div class="contenedor-mapa">
   <div class="contenedor-busqueda">
     <input 
@@ -6,7 +8,10 @@
       placeholder="Buscar" 
       aria-label="Buscar lugares"
       (keyup.enter)="buscarLugares()">
-      
+
+      <button class="boton-volver" onclick="window.history.back();">
+        Volver
+      </button>
     <button (click)="buscarLugares()" aria-label="Buscar lugares">
       <ion-icon name="search-outline"></ion-icon>
     </button>

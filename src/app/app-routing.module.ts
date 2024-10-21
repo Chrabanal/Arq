@@ -22,11 +22,11 @@ const routes: Routes = [
   },
   {
     path: 'map',
-    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/main/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/main/profile/profile.module').then( m => m.ProfilePageModule) , canActivate: [AuthGuard]
 
   },
 
