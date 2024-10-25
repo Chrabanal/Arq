@@ -22,10 +22,6 @@ export class MapPage implements OnInit {
   renderizadorDirecciones: google.maps.DirectionsRenderer | null = null;
   autocompletado: google.maps.places.Autocomplete | null = null;
 
-  supermercados: string[] = [
-    'Acuenta', 'Ekono', 'Lider', 'Santa Isabel', 'Tottus', 'OXXO'
-  ];
-
   constructor() {}
 
   ngOnInit() {
@@ -53,16 +49,12 @@ export class MapPage implements OnInit {
         return;
       }
 
-      const supermercadoCoincide = this.supermercados.find(s => lugar.name.includes(s));
-      if (supermercadoCoincide) {
-        this.datosUbicacion = {
-          lat: lugar.geometry.location.lat(),
-          lng: lugar.geometry.location.lng(),
-        };
-        this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-      } else {
-        this.mostrarError('Por favor selecciona un supermercado de la lista.');
-      }
+      // Actualiza la ubicación sin verificar supermercados
+      this.datosUbicacion = {
+        lat: lugar.geometry.location.lat(),
+        lng: lugar.geometry.location.lng(),
+      };
+      this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
     });
 
     if (this.datosUbicacion) {
@@ -121,6 +113,7 @@ export class MapPage implements OnInit {
           const lugar = resultados[0];
           if (lugar.geometry && lugar.geometry.location) {
             this.actualizarMapa(lugar.geometry.location.lat(), lugar.geometry.location.lng());
+            this.consultaBusqueda = ''; // Limpia el campo de búsqueda después de la búsqueda
           } else {
             this.mostrarError('No se encontraron resultados.');
           }
