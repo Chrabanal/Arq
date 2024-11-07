@@ -4,18 +4,21 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title >CheckMyBag </ion-title>
+    <ion-title >CheckMyStock </ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-menu side="start" menuId="first" contentId="main-content">
   <ion-header>
-    <ion-toolbar >
-      <ion-title>Menú</ion-title>
-      <h5>bienvenido-{{User()?.name}}</h5>
+    <ion-toolbar>
+      <div class="center-content">
+        <ion-title>Menú</ion-title>
+        <h5>Bienvenido-{{User()?.name}}</h5>
+      </div>
     </ion-toolbar>
   </ion-header>
+  
 
   <ion-content>
     <ion-list>
@@ -42,7 +45,7 @@
       </ion-item>
       <ion-item button>
         <ion-icon slot="start" name="close-outline"></ion-icon>
-        <ion-label (click)="signOut()">cerrar sesion </ion-label>
+        <ion-label (click)="signOut()">Cerrar Sesión </ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -158,6 +161,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title>CheckMyBag V1.0</ion-title>
+    <ion-title>CheckMyStock V1.0</ion-title>
   </ion-toolbar>
 </ion-footer>

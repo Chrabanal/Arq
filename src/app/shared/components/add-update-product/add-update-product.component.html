@@ -1,4 +1,4 @@
-<app-header [isModal]="true" [title]="product? 'Actualizar Producto' : 'agregar producto'"></app-header>
+<app-header [isModal]="true" [title]="product? 'Actualizar Producto' : 'Agregar Producto'"></app-header>
 <ion-content>
     <form
     [formGroup]="form"
@@ -15,7 +15,7 @@
 <br>
 
 <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
-  seleccionar
+  Seleccionar
 </ion-button>
 
 
@@ -101,7 +101,7 @@
       class="ion-margin"
       type="submit"
       [disabled]="form.invalid"
-    > {{product? 'Actualizar Producto' : 'agregar producto'}}
+    > {{product? 'Actualizar Producto' : 'Agregar Producto'}}
     <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
 
