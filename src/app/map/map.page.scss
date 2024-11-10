@@ -9,15 +9,15 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  flex-wrap: nowrap; /* Asegura que no haya wrap en pantallas pequeñas */
+  flex-wrap: nowrap;
   gap: 8px;
   width: auto;
-  overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+  overflow-x: auto;
 }
 
 .contenedor-busqueda input {
-  flex: 1; /* Ajusta el ancho del input */
-  min-width: 150px; /* Ancho mínimo en pantallas pequeñas */
+  flex: 1; 
+  min-width: 150px; 
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -33,32 +33,32 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  min-width: 40px; /* Asegura un ancho mínimo */
+  min-width: 40px; 
 }
 
 .contenedor-busqueda button ion-icon {
   font-size: 20px;
 }
 
-/* Media queries para pantallas pequeñas */
+
 @media (max-width: 768px) {
   .contenedor-busqueda {
     width: 100%;
     left: 0;
     transform: none;
-    padding: 5px; /* Reduce padding */
-    justify-content: space-between; /* Espacio entre elementos */
-    gap: 5px; /* Reduce gap entre botones */
+    padding: 5px; 
+    justify-content: space-between; 
+    gap: 5px; 
   }
 
   .contenedor-busqueda input {
-    min-width: 100px; /* Reduce el ancho mínimo del input */
+    min-width: 100px; 
     flex: 1;
   }
 
   .contenedor-busqueda button {
-    padding: 6px; /* Ajusta padding en botones */
-    min-width: 30px; /* Ajusta ancho mínimo */
+    padding: 6px; 
+    min-width: 30px;
   }
   .imagen-super {
     overflow: hidden;
@@ -70,23 +70,23 @@
   
   .scroll-container {
     display: flex;
-    animation: scroll 5s linear infinite; /* Ajusta la duración según la velocidad deseada */
+    animation: scroll 5s linear infinite; 
   }
   
   .scroll-container img {
-    width: 50px; /* Tamaño uniforme */
+    width: 50px;
     height: auto;
     margin: 0 5px;
     flex-shrink: 0;
   }
   
-  /* Animación de desplazamiento continuo */
+  
   @keyframes scroll {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* Ajusta para que vuelva al inicio */
+      transform: translateX(-50%);
     }
   }
   
