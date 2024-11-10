@@ -122,7 +122,6 @@ let sub = this.firebaseSvc.getCollectionsData(path).subscribe ({
   }
 
 }
-
 //====gasto producto ===
 getProfits(){
   return this.products.reduce((index, product) => index + product.price*product.soldUnits, 0);

@@ -1,9 +1,3 @@
-.contenedor-mapa { 
-  height: 60vh;  
-  width: 100%;   
-  position: relative;  
-}
-
 .contenedor-busqueda {
   position: absolute;
   top: 10px;
@@ -15,16 +9,18 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  flex-wrap: wrap; 
+  flex-wrap: nowrap; /* Asegura que no haya wrap en pantallas pequeñas */
+  gap: 8px;
   width: auto;
+  overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
 }
 
 .contenedor-busqueda input {
-  width: 200px;
+  flex: 1; /* Ajusta el ancho del input */
+  min-width: 150px; /* Ancho mínimo en pantallas pequeñas */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-right: 8px;
 }
 
 .contenedor-busqueda button {
@@ -36,67 +32,64 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 10px;
   flex-shrink: 0;
+  min-width: 40px; /* Asegura un ancho mínimo */
 }
 
 .contenedor-busqueda button ion-icon {
   font-size: 20px;
-  margin-right: 3px; 
-} 
-
-.imagen-super {
-  display: flex;
-  justify-content: space-around;
-  overflow: hidden;
-  width: 100%; 
-  padding: 10px;
-  box-sizing: border-box;
-  animation: scroll 10s linear infinite; /* Aplica la animación */
 }
 
-.imagen-super img {
-  width: 8vw;
-  height: auto;
-  margin: 0 5px;
-}
-
-/* Animación para desplazamiento de imágenes */
-@keyframes scroll {
-  0% {
-    transform: translateX(100%); 
-  }
-  100% {
-    transform: translateX(-100%); 
-  }
-}
-
-/* Media queries para adaptar el diseño a pantallas más pequeñas */
+/* Media queries para pantallas pequeñas */
 @media (max-width: 768px) {
   .contenedor-busqueda {
-    flex-direction: column;
-    align-items: stretch;
-    width: 90%;
-    left: 50%; 
-    transform: translateX(-50%);
+    width: 100%;
+    left: 0;
+    transform: none;
+    padding: 5px; /* Reduce padding */
+    justify-content: space-between; /* Espacio entre elementos */
+    gap: 5px; /* Reduce gap entre botones */
   }
 
   .contenedor-busqueda input {
-    width: 100%;
-    margin-bottom: 10px;
+    min-width: 100px; /* Reduce el ancho mínimo del input */
+    flex: 1;
   }
 
   .contenedor-busqueda button {
-    margin-right: 0;
+    padding: 6px; /* Ajusta padding en botones */
+    min-width: 30px; /* Ajusta ancho mínimo */
+  }
+  .imagen-super {
+    overflow: hidden;
     width: 100%;
-    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding-top: 10px;
+    margin-bottom: 50px;
   }
-
-  .contenedor-mapa {
-    height: 50vh; 
+  
+  .scroll-container {
+    display: flex;
+    animation: scroll 5s linear infinite; /* Ajusta la duración según la velocidad deseada */
   }
-
-  .imagen-super img {
-    width: 12vw;
+  
+  .scroll-container img {
+    width: 50px; /* Tamaño uniforme */
+    height: auto;
+    margin: 0 5px;
+    flex-shrink: 0;
   }
+  
+  /* Animación de desplazamiento continuo */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* Ajusta para que vuelva al inicio */
+    }
+  }
+  
+  
 }
+
