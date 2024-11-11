@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, getAuth } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, getAuth,sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc , getDoc,addDoc, collection,query, collectionData ,updateDoc ,deleteDoc} from '@angular/fire/firestore';
@@ -45,6 +45,9 @@ updateUser(displayName: string){
 
 }
 
+sendRecoveryEmail(email: string){
+  return sendPasswordResetEmail(getAuth(), email);
+}
 
 
 
