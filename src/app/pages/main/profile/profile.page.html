@@ -1,5 +1,15 @@
 
-<ion-content class="ion-padding-top  ion-text-center">
+<ion-header >
+  <ion-toolbar color="secondary">
+    <ion-title>CheckMyStock</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+  
+<ion-content class="ion-padding-top  ion-text-center" color="secondary">
   <ion-title >MI PERFIL </ion-title>
   <ion-avatar>
     <img [src]=" User()?.image " />

@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="secondary" >
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -9,47 +9,54 @@
 </ion-header>
 
 
-<ion-menu side="start" menuId="first" contentId="main-content">
-  <ion-header>
-    <ion-toolbar>
+<ion-menu side="start" menuId="first" contentId="main-content" >
+  <ion-header >
+    <ion-toolbar color="secondary">
       <div class="center-content">
         <ion-title>Menú</ion-title>
+        <ion-avatar>
+          <img [src]=" User()?.image " />
+        </ion-avatar>
         <h5>Bienvenido-{{User()?.name}}</h5>
       </div>
     </ion-toolbar>
   </ion-header>
   
 
-  <ion-content>
-    <ion-list>
-      <ion-item button>
+  <ion-content color="secondary">
+    <ion-list color="secondary">
+      <ion-item button color="secondary">
         <ion-icon slot="start" name="cart-outline"></ion-icon>
         <ion-label>Dashboard</ion-label>
       </ion-item>
-      <ion-item button>
+
+      <ion-item button color="secondary">
         <ion-icon slot="start" name="cash-outline"></ion-icon>
         <ion-label>Gastos Mensuales</ion-label>
       </ion-item>
-      <ion-item button [routerLink]="['/map']">
+
+      <ion-item button [routerLink]="['/map']" color="secondary">
         <ion-icon slot="start" name="location-outline"></ion-icon>
         <ion-label>Supermercados Cercanos</ion-label>
       </ion-item>
       
-      <ion-item button >
+      <ion-item button color="secondary" >
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>
-      <ion-item button  [routerLink]="['/profile']">
+
+      <ion-item button  [routerLink]="['/profile']" color="secondary">
         <ion-icon slot="start" name="person-circle-outline"></ion-icon>
         <ion-label >Perfil</ion-label>
       </ion-item>
-      <ion-item button>
+
+      <ion-item button color="danger" >
         <ion-icon slot="start" name="close-outline"></ion-icon>
         <ion-label (click)="signOut()">Cerrar Sesión </ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
-</ion-menu> 
+</ion-menu>   
 
 <ion-router-outlet id="main-content"></ion-router-outlet>
 
