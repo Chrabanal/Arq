@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
 
 
   products : Product[] = [];
+  loading : boolean = false;
 
   ngOnInit() {
   }
@@ -63,10 +64,13 @@ ionViewWillEnter(){
 
 getProducts(){
  let path = `users/${this.User().uid}/products`;
+ this.loading = true;
+
 let sub = this.firebaseSvc.getCollectionsData(path).subscribe ({
    next:(res:any) => {
      console.log(res);
      this.products = res;
+     this.loading = false;
      sub.unsubscribe();
    }
 
@@ -117,6 +121,10 @@ let sub = this.firebaseSvc.getCollectionsData(path).subscribe ({
     });
   }
 
+}
+//====gasto producto ===
+getProfits(){
+  return this.products.reduce((index, product) => index + product.price*product.soldUnits, 0);
 }
 
 }

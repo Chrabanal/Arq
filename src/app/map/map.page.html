@@ -1,20 +1,29 @@
 <div class="contenedor-mapa">
   <div class="contenedor-busqueda">
+
+    <!-- Botón Volver antes de la barra de búsqueda -->
+    <button class="boton-volver" onclick="window.history.back();">
+      Volver
+    </button>
+
+    <!-- Barra de búsqueda -->
     <input 
       id="autocompletar" 
       type="text" 
       placeholder="Buscar" 
+      aria-label="Buscar lugares"
+      [(ngModel)]="consultaBusqueda" 
       (keyup.enter)="buscarLugares()">
-      
-    <button (click)="buscarLugares()">
+
+    <button (click)="buscarLugares()" aria-label="Buscar lugares">
       <ion-icon name="search-outline"></ion-icon>
     </button>
-    
-    <button (click)="obtenerDirecciones()">
+
+    <button (click)="obtenerDirecciones()" aria-label="Obtener direcciones">
       <ion-icon name="navigate-outline"></ion-icon> 
     </button>
-    
-    <button (click)="irALaUbicacionActual()">
+
+    <button (click)="irALaUbicacionActual()" aria-label="Ir a la ubicación actual">
       <ion-icon name="locate-outline"></ion-icon> 
     </button>
   </div>
@@ -28,11 +37,18 @@
   </google-map>
 
   <div class="imagen-super">
-    <img src="assets/img/Sacuenta.jpg" alt="Acuenta">
-    <img src="assets/img/Sekono.png" alt="Ekono">
-    <img src="assets/img/Slider.png" alt="Lider">
-    <img src="assets/img/Ssanta.png" alt="Santa">
-    <img src="assets/img/Stottus.png" alt="Totus">
-    <img src="assets/img/Soxxo.png" alt="OXXO">
+    <div class="scroll-container">
+      <img src="assets/img/Sacuenta.jpg" alt="Acuenta Supermercado">
+      <img src="assets/img/Slider.png" alt="Lider Supermercado">
+      <img src="assets/img/Ssanta.png" alt="Santa Isabel Supermercado">
+      <img src="assets/img/Stottus.png" alt="Tottus Supermercado">
+      <img src="assets/img/Soxxo.png" alt="OXXO Tienda de conveniencia">
+      
+      <!-- Duplica las imágenes para un efecto de bucle continuo -->
+      <img src="assets/img/Sacuenta.jpg" alt="Acuenta Supermercado">
+      <img src="assets/img/Slider.png" alt="Lider Supermercado">
+      <img src="assets/img/Ssanta.png" alt="Santa Isabel Supermercado">
+      <img src="assets/img/Stottus.png" alt="Tottus Supermercado">
+      <img src="assets/img/Soxxo.png" alt="OXXO Tienda de conveniencia">
+    </div>
   </div>
-</div>

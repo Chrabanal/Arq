@@ -4,18 +4,21 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title >CheckMyBag </ion-title>
+    <ion-title >CheckMyStock </ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-menu side="start" menuId="first" contentId="main-content">
   <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Menú</ion-title>
-      <p></p>
+    <ion-toolbar>
+      <div class="center-content">
+        <ion-title>Menú</ion-title>
+        <h5>Bienvenido-{{User()?.name}}</h5>
+      </div>
     </ion-toolbar>
   </ion-header>
+  
 
   <ion-content>
     <ion-list>
@@ -32,22 +35,21 @@
         <ion-label>Supermercados Cercanos</ion-label>
       </ion-item>
       
-      <ion-item button>
+      <ion-item button >
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>
-      <ion-item button>
+      <ion-item button  [routerLink]="['/profile']">
         <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label>Perfil</ion-label>
-       
+        <ion-label >Perfil</ion-label>
       </ion-item>
       <ion-item button>
         <ion-icon slot="start" name="close-outline"></ion-icon>
-        <ion-label (click)="signOut()">cerrar sesion </ion-label>
+        <ion-label (click)="signOut()">Cerrar Sesión </ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
-</ion-menu>
+</ion-menu> 
 
 <ion-router-outlet id="main-content"></ion-router-outlet>
 
@@ -55,17 +57,23 @@
 
 
   <!-- Tarjeta de Gastos Mensuales -->
-  <ion-card  color="primary">
-    <ion-card-header >
-      <ion-card-title>Gastos Mensuales</ion-card-title>
-      <ion-card-subtitle>Resumen de octubre</ion-card-subtitle>
-    </ion-card-header>
+ <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center">
+  <div>
+    <h5>{{products.length}}</h5>
+  <p>Productos</p>
+  </div>
 
-    <ion-card-content>
-      <p>Total Gastos: $500.000</p>
-      <p>Última actualización: 15 de octubre</p>
-    </ion-card-content>
-  </ion-card>
+  <div>
+    <h5>{{ ('$' + (getProfits() | number:'1.0-0')).replace(',', '.') }}</h5>
+
+
+  <p>Gastado</p>
+  </div>
+ </ion-card>
+
+
+
+
 
   <!-- Buscador -->
   <ion-searchbar color="white" placeholder="Buscar"></ion-searchbar>
@@ -76,8 +84,8 @@
     <ion-row>
       <ion-col>
         <ion-card>
-          <ion-card-header color="primary">
-            <ion-card-title >Mis Compras</ion-card-title>
+          <ion-card-header mode="ios" color="secondary" >
+            <ion-card-title  >Mis Compras</ion-card-title>
             <ion-card-subtitle>compras realizadas en el mes de octubre</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
@@ -91,16 +99,26 @@
                 <ion-label>
                   <div class="name">{{p.name}}</div>
                   <div class="data">
-                    <strong>Precio:</strong> {{p.price | currency:'CLP $'}} <br>
+                    <strong>Precio:</strong> {{ (p.price | currency:'USD':'symbol':'1.0-0').replace(',', '.') }} <br>
+
                     <strong>Unidades compradas:</strong> {{p.soldUnits}} <br>
                   </div>
                   <ion-chip color="primary" mode="ios" outline="true">
-                    <ion-label> Total Gastado  :{{p.price * p.soldUnits |currency:'CLP $'}}</ion-label>
+                    <ion-label> Total Gastado : {{ (p.price * p.soldUnits | currency:'USD':'symbol':'1.0-0').replace(',', '.') }}</ion-label>
+
                   </ion-chip>
 
                 </ion-label>
 
               </ion-item>
+
+
+         
+
+
+
+
+
 
               <ion-item-options >
                 <ion-item-option (click)="addUpdateProduct(p)">
@@ -131,11 +149,8 @@
 </ion-fab>
 
 
-
-
-
 <ion-footer>
   <ion-toolbar>
-    <ion-title>CheckMyBag V1.0</ion-title>
+    <ion-title>CheckMyStock V1.0</ion-title>
   </ion-toolbar>
 </ion-footer>

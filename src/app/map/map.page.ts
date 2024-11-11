@@ -22,10 +22,6 @@ export class MapPage implements OnInit {
   renderizadorDirecciones: google.maps.DirectionsRenderer | null = null;
   autocompletado: google.maps.places.Autocomplete | null = null;
 
-  supermercados: string[] = [
-    
-  ];
-
   constructor() {}
 
   ngOnInit() {
@@ -49,26 +45,20 @@ export class MapPage implements OnInit {
     this.autocompletado.addListener('place_changed', () => {
       const lugar = this.autocompletado?.getPlace();
       if (!lugar?.geometry || !lugar.geometry.location) {
-        this.mensajeError = 'No se encontró información del lugar.';
+        this.mostrarError('No se encontró información del lugar.');
         return;
       }
 
-      const supermercadoCoincide = this.supermercados.find(s => lugar.name.includes(s));
-      if (supermercadoCoincide) {
-        this.datosUbicacion = {
-          lat: lugar.geometry.location.lat(),
-          lng: lugar.geometry.location.lng(),
-        };
-        this.centrarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-        this.agregarMarcador(this.datosUbicacion.lat, this.datosUbicacion.lng);
-      } else {
-        this.mensajeError = 'Por favor selecciona un supermercado de la lista.';
-      }
+      // Actualiza la ubicación sin verificar supermercados
+      this.datosUbicacion = {
+        lat: lugar.geometry.location.lat(),
+        lng: lugar.geometry.location.lng(),
+      };
+      this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
     });
 
     if (this.datosUbicacion) {
-      this.centrarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-      this.agregarMarcador(this.datosUbicacion.lat, this.datosUbicacion.lng);
+      this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
     }
 
     this.servicio = new google.maps.places.PlacesService(this.mapa);
@@ -79,10 +69,7 @@ export class MapPage implements OnInit {
 
   alHacerClicMapa(evento: google.maps.MapMouseEvent) {
     if (evento.latLng) {
-      const lat = evento.latLng.lat();
-      const lng = evento.latLng.lng();
-      this.centrarMapa(lat, lng);
-      this.agregarMarcador(lat, lng);
+      this.actualizarMapa(evento.latLng.lat(), evento.latLng.lng());
     }
   }
 
@@ -90,16 +77,14 @@ export class MapPage implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (posicion) => {
-          const lat = posicion.coords.latitude;
-          const lng = posicion.coords.longitude;
-          this.datosUbicacion = { lat, lng };
-          if (this.mapa) {
-            this.centrarMapa(lat, lng);
-            this.agregarMarcador(lat, lng);
-          }
+          this.datosUbicacion = {
+            lat: posicion.coords.latitude,
+            lng: posicion.coords.longitude,
+          };
+          this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
         },
         (error) => {
-          console.error('Error obteniendo la ubicación:', error);
+          this.mostrarError('Error obteniendo la ubicación.');
         },
         {
           enableHighAccuracy: true,
@@ -108,58 +93,36 @@ export class MapPage implements OnInit {
         }
       );
     } else {
-      console.error('Geolocalización no es compatible con este navegador.');
+      this.mostrarError('Geolocalización no es compatible con este navegador.');
     }
   }
 
   buscarLugares() {
-    if (this.servicio) {
-      if (this.consultaBusqueda) {
-        const peticion = {
-          query: this.consultaBusqueda,
-          fields: ['name', 'geometry'],
-        };
-        this.servicio.textSearch(peticion, (resultados, estado) => {
-          if (estado === google.maps.places.PlacesServiceStatus.OK && resultados) {
-            const lugar = resultados[0];
-            if (lugar.geometry && lugar.geometry.location) {
-              this.datosUbicacion = {
-                lat: lugar.geometry.location.lat(),
-                lng: lugar.geometry.location.lng(),
-              };
-              this.centrarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-              this.agregarMarcador(this.datosUbicacion.lat, this.datosUbicacion.lng);
-            }
+    if (!this.servicio || !this.mapa) {
+      this.mostrarError('Servicio no disponible.');
+      return;
+    }
+
+    if (this.consultaBusqueda) {
+      const peticion = {
+        query: this.consultaBusqueda,
+        fields: ['name', 'geometry'],
+      };
+      this.servicio.textSearch(peticion, (resultados, estado) => {
+        if (estado === google.maps.places.PlacesServiceStatus.OK && resultados) {
+          const lugar = resultados[0];
+          if (lugar.geometry && lugar.geometry.location) {
+            this.actualizarMapa(lugar.geometry.location.lat(), lugar.geometry.location.lng());
+            this.consultaBusqueda = ''; // Limpia el campo de búsqueda después de la búsqueda
           } else {
-            this.mensajeError = 'No se encontraron resultados.';
+            this.mostrarError('No se encontraron resultados.');
           }
-        });
-      } else if (this.datosUbicacion) {
-        const peticion = {
-          location: new google.maps.LatLng(this.datosUbicacion.lat, this.datosUbicacion.lng),
-          radius: 500,
-          type: 'supermarket',
-        };
-        this.servicio.nearbySearch(peticion, (resultados, estado) => {
-          if (estado === google.maps.places.PlacesServiceStatus.OK && resultados) {
-            const tiendaMasCercana = resultados[0];
-            if (tiendaMasCercana && tiendaMasCercana.geometry && tiendaMasCercana.geometry.location) {
-              this.datosUbicacion = {
-                lat: tiendaMasCercana.geometry.location.lat(),
-                lng: tiendaMasCercana.geometry.location.lng(),
-              };
-              this.centrarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-              this.agregarMarcador(this.datosUbicacion.lat, this.datosUbicacion.lng);
-            }
-          } else {
-            this.mensajeError = 'No se encontraron supermercados cercanos.';
-          }
-        });
-      } else {
-        this.mensajeError = 'Ingresa una consulta de búsqueda válida.';
-      }
+        } else {
+          this.mostrarError('No se encontraron resultados.');
+        }
+      });
     } else {
-      this.mensajeError = 'Servicio no disponible.';
+      this.mostrarError('Ingresa una consulta de búsqueda válida.');
     }
   }
 
@@ -167,8 +130,8 @@ export class MapPage implements OnInit {
     if (this.servicioDirecciones && this.datosUbicacion && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (posicion) => {
-          const origen = { lat: posicion.coords.latitude, lng: posicion.coords.longitude };
-          const destino = { lat: this.datosUbicacion!.lat, lng: this.datosUbicacion!.lng };
+          const origen = new google.maps.LatLng(posicion.coords.latitude, posicion.coords.longitude);
+          const destino = new google.maps.LatLng(this.datosUbicacion!.lat, this.datosUbicacion!.lng);
 
           const peticion: google.maps.DirectionsRequest = {
             origin: origen,
@@ -177,33 +140,36 @@ export class MapPage implements OnInit {
           };
 
           this.servicioDirecciones?.route(peticion, (resultado, estado) => {
-            if (estado === google.maps.DirectionsStatus.OK && this.renderizadorDirecciones) {
-              this.renderizadorDirecciones.setDirections(resultado);
+            if (estado === google.maps.DirectionsStatus.OK) {
+              this.renderizadorDirecciones?.setDirections(resultado);
             } else {
-              this.mensajeError = 'Error obteniendo direcciones.';
+              this.mostrarError('Error obteniendo direcciones.');
             }
           });
         },
         (error) => {
-          this.mensajeError = 'No se pudo obtener tu ubicación para generar la ruta.';
+          this.mostrarError('No se pudo obtener tu ubicación para generar la ruta.');
         }
       );
     }
   }
 
+  actualizarMapa(lat: number, lng: number) {
+    this.centrarMapa(lat, lng);
+    this.agregarMarcador(lat, lng);
+  }
+
   centrarMapa(lat: number, lng: number) {
-    if (this.mapa) {
-      this.mapa.setCenter({ lat, lng });
-      this.mapa.setZoom(15);
-    }
+    this.mapa?.setCenter({ lat, lng });
+    this.mapa?.setZoom(15);
   }
 
   agregarMarcador(lat: number, lng: number) {
-    if (this.mapa) {
-      if (this.marcador) {
-        this.marcador.setMap(null);
-      }
-
+    if (this.marcador) {
+      // Mover el marcador existente
+      this.marcador.setPosition({ lat, lng });
+    } else {
+      // Crear un nuevo marcador si no existe
       this.marcador = new google.maps.Marker({
         position: { lat, lng },
         map: this.mapa,
@@ -214,10 +180,14 @@ export class MapPage implements OnInit {
 
   irALaUbicacionActual() {
     if (this.datosUbicacion) {
-      this.centrarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-      this.agregarMarcador(this.datosUbicacion.lat, this.datosUbicacion.lng);
+      this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
     } else {
       this.obtenerUbicacionActual();
     }
+  }
+
+  mostrarError(mensaje: string) {
+    this.mensajeError = mensaje;
+    console.error(mensaje);
   }
 }
