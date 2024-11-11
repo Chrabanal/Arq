@@ -9,15 +9,26 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
   gap: 8px;
   width: auto;
   overflow-x: auto;
 }
 
+.boton-volver {
+  margin-right: 8px;
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
 .contenedor-busqueda input {
-  flex: 1; 
-  min-width: 150px; 
+  flex: 1;
+  min-width: 150px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -32,64 +43,65 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  flex-shrink: 0;
-  min-width: 40px; 
+  min-width: 40px;
 }
 
 .contenedor-busqueda button ion-icon {
   font-size: 20px;
 }
 
+.imagen-super {
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 10px;
+  margin-bottom: 50px;
+}
+
+.scroll-container {
+  display: flex;
+  animation: scroll 20s linear infinite;
+  align-items: flex-start;
+}
+
+.scroll-container img {
+  width: 60px; 
+  height: 60px;
+  padding-bottom: 1px;
+  margin-right: 5px;
+  flex-shrink: 0;
+  object-fit: cover; 
+  border-radius: 4px;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
 @media (max-width: 768px) {
   .contenedor-busqueda {
     width: 100%;
     left: 0;
-    transform: none;
-    padding: 5px; 
-    justify-content: space-between; 
-    gap: 5px; 
+    padding: 5px;
+    justify-content: space-between;
+    gap: 5px;
   }
 
   .contenedor-busqueda input {
-    min-width: 100px; 
-    flex: 1;
+    min-width: 100px;
   }
 
   .contenedor-busqueda button {
-    padding: 6px; 
+    padding: 6px;
     min-width: 30px;
   }
-  .imagen-super {
-    overflow: hidden;
-    width: 100%;
-    box-sizing: border-box;
-    padding-top: 10px;
-    margin-bottom: 50px;
-  }
-  
-  .scroll-container {
-    display: flex;
-    animation: scroll 5s linear infinite; 
-  }
-  
-  .scroll-container img {
-    width: 50px;
-    height: auto;
-    margin: 0 5px;
-    flex-shrink: 0;
-  }
-  
-  
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  
-}
 
+  .scroll-container img {
+    width: 50px; 
+    height: 50px;
+  }
+}
