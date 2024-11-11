@@ -10,7 +10,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full'
-
   },
   {
     path: 'auth',
@@ -29,8 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/main/profile/profile.module').then( m => m.ProfilePageModule) , canActivate: [AuthGuard]
 
   },
-
-  
 
 ];
 
