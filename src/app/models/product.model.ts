@@ -4,4 +4,5 @@ export interface Product {
   price : number,
   image : string,
   id: string,
+  month : string, //mes 
 }

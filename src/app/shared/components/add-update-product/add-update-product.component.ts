@@ -6,8 +6,6 @@ import { User } from 'src/app/models/user.model';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Product } from 'src/app/models/product.model';
 
-
-
 @Component({
   selector: 'app-add-update-product',
   templateUrl: './add-update-product.component.html',
@@ -30,7 +28,7 @@ export class AddUpdateProductComponent implements OnInit {
 
   ngOnInit() {
     this.User = this.utilsSvc.getFromLocalStorage('user');
-    if (this.product)this.form.setValue(this.product);
+    if (this.product) this.form.setValue(this.product);
   }
 
   // ===tomar foto ===
@@ -53,6 +51,14 @@ export class AddUpdateProductComponent implements OnInit {
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
+    //=== obtener el mes actual ===
+    const date = new Date();
+    const months = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    const currentMonth = months[date.getMonth()];
+
     //===subir imagen y obtener url ===
     let dataUrl = this.form.value.image;
     let imagePath = `${this.User.uid}/${Date.now()}`;
@@ -60,7 +66,13 @@ export class AddUpdateProductComponent implements OnInit {
     this.form.controls.image.setValue(imageUrl);
     delete this.form.value.id;
 
-    this.firebaseSvc.addDocument(path, this.form.value).then(async (res) => {
+    // Asignar el mes actual al producto antes de guardar
+    const productData = {
+      ...this.form.value,
+      month: currentMonth  // Agregar el mes actual
+    };
+
+    this.firebaseSvc.addDocument(path, productData).then(async (res) => {
       this.utilsSvc.dismissModal({ success: true });
 
       this.utilsSvc.presentToast({
@@ -84,9 +96,6 @@ export class AddUpdateProductComponent implements OnInit {
     });
   }
 
-
-
-
   //==actualizar producto ===
   async updateProduct() {
     let path = `users/${this.User.uid}/products/${this.product.id}`;
@@ -94,20 +103,16 @@ export class AddUpdateProductComponent implements OnInit {
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
-
     if (this.form.value.image !== this.product.image) {
-
       let dataUrl = this.form.value.image;
       let imagePath = await this.firebaseSvc.getFilePath(this.product.image);
       let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
       this.form.controls.image.setValue(imageUrl);
     }
 
-
     delete this.form.value.id;
 
     this.firebaseSvc.updateDocument(path, this.form.value).then(async (res) => {
-
       this.utilsSvc.dismissModal({ success: true });
 
       this.utilsSvc.presentToast({
@@ -131,5 +136,3 @@ export class AddUpdateProductComponent implements OnInit {
     });
   }
 }
-
-

@@ -27,7 +27,11 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/main/profile/profile.module').then( m => m.ProfilePageModule) , canActivate: [AuthGuard]
 
+  },  {
+    path: 'gastos',
+    loadChildren: () => import('./pages/gastos/gastos.module').then( m => m.GastosPageModule)
   },
+
 
 ];
 

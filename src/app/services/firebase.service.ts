@@ -7,6 +7,9 @@ import { getFirestore, setDoc, doc , getDoc,addDoc, collection,query, collection
 import { UtilsService } from './utils.service';
 import {AngularFireStorage} from '@angular/fire/compat/storage';
 import { getStorage, uploadString,ref,getDownloadURL ,deleteObject } from '@angular/fire/storage';
+import { Observable, of } from 'rxjs';
+import { Product } from '../models/product.model';
+
 
 
 
@@ -15,10 +18,13 @@ import { getStorage, uploadString,ref,getDownloadURL ,deleteObject } from '@angu
 })
 export class FirebaseService {
 
+  
+
     auth = inject(AngularFireAuth);
     firestore = inject(AngularFirestore);
     utilsSvc= inject(UtilsService);
-    storage = inject(AngularFireStorage);
+    storage = inject(AngularFireStorage); 
+
 
 getAuth(){
   return getAuth();
@@ -136,6 +142,16 @@ getCollectionsData(path : string , collectionQuery? : any){
  const ref = collection(getFirestore(), path);
   return collectionData(query(ref, collectionQuery), {idField: 'id'});
 }
+
+// Agrega este método en FirebaseService
+
+
+
+
+getUserId(): Promise<string | null> {
+  return this.auth.currentUser.then(user => user ? user.uid : null);
+}
+
 
 
 
