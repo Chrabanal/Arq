@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CheckMyStock</string>
+    <string name="title_activity_main">CheckMyStock</string>
+    <string name="package_name">com.myapp.raccoon</string>
+    <string name="custom_url_scheme">com.myapp.raccoon</string>
+</resources>
