@@ -17,7 +17,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     IonicModule,
     HomePageRoutingModule,
     SharedModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
     
   ],
   declarations: [HomePage]

@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { ScannerQRCodeConfig, NgxScannerQrcodeService } from 'ngx-scanner-qrcode'
+import { Barcode, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 
@@ -25,7 +26,8 @@ export class HomePage implements OnInit {
   products : Product[] = [];
   loading : boolean = false;
 
-
+  //====scanner qr code ===
+  barcodes: Barcode[] = [];
   isSupported = false;
   isWeb = false;
 
@@ -41,6 +43,11 @@ export class HomePage implements OnInit {
   ngOnInit() {
     //Checkear la plataforma
     this.checkPlatform();
+    if (!this.isWeb) {
+      BarcodeScanner.isSupported().then((result) => {
+        this.isSupported = result.supported;
+      });
+    }
   }
 
   checkPlatform() {
@@ -56,7 +63,33 @@ export class HomePage implements OnInit {
     console.log('Resultado:',result);
   }
 
+  async scan(): Promise<void> {
+    if (this.isWeb) {
+      console.log('Utilizando el ngx-scanner');
+    } else {
+      const granted = await this.requestPermissions();
+      if (!granted) {
+        this.presentAlert();
+        return;
+      }
+      const { barcodes } = await BarcodeScanner.scan();
+      this.barcodes.push(...barcodes);
+    }
+  }
 
+  async requestPermissions(): Promise<boolean> {
+    const { camera } = await BarcodeScanner.requestPermissions();
+    return camera === 'granted' || camera === 'limited';
+  }
+
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Permission denied',
+      message: 'Please grant camera permission to use the barcode scanner.',
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 
 //=====cerrar sesion =====
   signOut(){
