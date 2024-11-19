@@ -1,15 +1,13 @@
 import type { CapacitorConfig } from '@capacitor/cli';
-
 const config: CapacitorConfig = {
-  appId: 'com.myapp.raccoon',
-  appName: 'CheckMyStock',
+  appId: 'com.example.app',
+  appName: 'checkmystock2',
   webDir: 'www',
   plugins: {
     SplashScreen: {
       launchShowDuration: 0,
       launchAutoHide: true,
-      launchFadeOutDuration: 3000,
-      backgroundColor: "#535353",
+      backgroundColor: "#000000", // Fondo negro
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
       showSpinner: false,

@@ -5,4 +5,5 @@ export interface Product {
   image : string,
   id: string,
   month : string, //mes 
+  codeqr : string,
 }
