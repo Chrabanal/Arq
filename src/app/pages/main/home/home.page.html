@@ -157,7 +157,37 @@
   </ion-fab-button>
 </ion-fab>
 
+ <!-- Barcode List -->
+ <ion-list>
+  <ion-item *ngFor="let barcode of barcodes">
+    <ion-label position="stacked">{{ barcode.format }}</ion-label>
+    <ion-input type="text" [value]="barcode.rawValue"></ion-input>
+  </ion-item>
+</ion-list>
 
+<!-- Floating Action Button for Scanning (only for mobile) -->
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="!isWeb">
+  <ion-fab-button (click)="scan()" [disabled]="!isSupported">
+    <ion-icon name="scan"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<!-- QR Scanner for Web  -->
+<ng-container *ngIf="isWeb">
+  <div class="scanner-container">
+    <ngx-scanner-qrcode [config]="config" (onDecode)="scanResult($event)" #action="scanner"></ngx-scanner-qrcode>
+
+    <!-- Loading Message -->
+    <p *ngIf="action.isLoading">⌛ Loading...</p>
+  </div>
+
+  <!-- Start/Stop Button -->
+  <div class="button-scan">
+    <ion-fab-button (click)="action.isStart ? action.stop() : action.start()" class="custom-fab-button">
+      {{ action.isStart ? 'Stop' : 'Start' }}
+    </ion-fab-button>
+  </div>
+</ng-container>
 <ion-footer>
   <ion-toolbar>
     <ion-title>CheckMyStock V1.0</ion-title>
