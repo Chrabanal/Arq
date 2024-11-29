@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Geolocation } from '@capacitor/geolocation'; // Importar geolocalización
 
 @Component({
   selector: 'app-map',
@@ -25,11 +26,12 @@ export class MapPage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.obtenerUbicacionActual();
+    this.obtenerUbicacionActual(); // Inicia la obtención de ubicación al cargar la página
   }
 
   alMapaListo(mapa: google.maps.Map) {
     this.mapa = mapa;
+
     const input = document.getElementById('autocompletar') as HTMLInputElement;
     this.autocompletado = new google.maps.places.Autocomplete(input);
     this.autocompletado.setFields(["place_id", "geometry", "name"]);
@@ -73,27 +75,21 @@ export class MapPage implements OnInit {
     }
   }
 
-  obtenerUbicacionActual() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (posicion) => {
-          this.datosUbicacion = {
-            lat: posicion.coords.latitude,
-            lng: posicion.coords.longitude,
-          };
-          this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
-        },
-        (error) => {
-          this.mostrarError('Error obteniendo la ubicación.');
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0
-        }
-      );
-    } else {
-      this.mostrarError('Geolocalización no es compatible con este navegador.');
+  async obtenerUbicacionActual() {
+    try {
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 5000,
+      });
+
+      this.datosUbicacion = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      this.actualizarMapa(this.datosUbicacion.lat, this.datosUbicacion.lng);
+    } catch (error) {
+      this.mostrarError('Error obteniendo la ubicación: ' + error.message);
     }
   }
 
@@ -151,6 +147,8 @@ export class MapPage implements OnInit {
           this.mostrarError('No se pudo obtener tu ubicación para generar la ruta.');
         }
       );
+    } else {
+      this.mostrarError('No hay información suficiente para obtener direcciones.');
     }
   }
 
