@@ -6,14 +6,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<< HEAD
         android:theme="@style/AppTheme">
-=======
-        android:theme="@style/AppTheme"
-        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
-    >
-
->>>>>>> ce9c6a8e68c59cf5580553bfd905e4d0865275ab
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name=".MainActivity"
@@ -39,9 +32,4 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- To get access to the camera. -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!-- To get access to the flashlight. -->
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    
 </manifest>

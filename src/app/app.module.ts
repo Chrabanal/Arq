@@ -13,6 +13,7 @@ import{AngularFireModule} from '@angular/fire/compat';
 import { environment } from 'src/environments/environment.prod';
 //-------NgxScanner------
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { IonicStorageModule } from '@ionic/storage-angular';
 LOAD_WASM().subscribe();
 
 
@@ -25,6 +26,7 @@ LOAD_WASM().subscribe();
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     NgxScannerQrcodeModule
+    
   ],
 
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,} ],

@@ -1,193 +1,153 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="secondary" >
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
-    <ion-title >CheckMyStock </ion-title>
+    <ion-title>CheckMyStock</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
-<ion-menu side="start" menuId="first" contentId="main-content" >
-  <ion-header >
+<!-- Menú lateral -->
+<ion-menu side="start" menuId="first" contentId="main-content">
+  <ion-header>
     <ion-toolbar color="secondary">
       <div class="center-content">
         <ion-title>Menú</ion-title>
         <ion-avatar>
-          <img [src]=" User()?.image " />
+          <img [src]="User()?.image" />
         </ion-avatar>
-        <h5>Bienvenido-{{User()?.name}}</h5>
+        <h5>Bienvenido - {{ User()?.name }}</h5>
       </div>
     </ion-toolbar>
   </ion-header>
-  
 
   <ion-content color="secondary">
-    <ion-list color="secondary">
+    <ion-list>
       <ion-item button color="secondary">
         <ion-icon slot="start" name="cart-outline"></ion-icon>
         <ion-label>Dashboard</ion-label>
       </ion-item>
 
-      <ion-item button color="secondary"  [routerLink]="['/gastos']">
+      <ion-item button color="secondary" [routerLink]="['/gastos']">
         <ion-icon slot="start" name="cash-outline"></ion-icon>
         <ion-label>Gastos Mensuales</ion-label>
       </ion-item>
 
-      <ion-item button [routerLink]="['/map']" color="secondary">
+      <ion-item button color="secondary" [routerLink]="['/map']">
         <ion-icon slot="start" name="location-outline"></ion-icon>
         <ion-label>Supermercados Cercanos</ion-label>
       </ion-item>
-      
-      <ion-item button color="secondary" >
+
+      <ion-item button color="secondary">
         <ion-icon slot="start" name="settings-outline"></ion-icon>
         <ion-label>Configuración</ion-label>
       </ion-item>
 
-      <ion-item button  [routerLink]="['/profile']" color="secondary">
+      <ion-item button color="secondary" [routerLink]="['/profile']">
         <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-        <ion-label >Perfil</ion-label>
+        <ion-label>Perfil</ion-label>
       </ion-item>
 
-      <ion-item button color="danger" >
+      <ion-item button color="danger" (click)="signOut()">
         <ion-icon slot="start" name="close-outline"></ion-icon>
-        <ion-label (click)="signOut()">Cerrar Sesión </ion-label>
+        <ion-label>Cerrar Sesión</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>
-</ion-menu>   
+</ion-menu>
 
 <ion-router-outlet id="main-content"></ion-router-outlet>
 
 <ion-content [fullscreen]="true" id="main-content">
-
-
   <!-- Tarjeta de Gastos Mensuales -->
- <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center">
-  <div>
-    <h5>{{products.length}}</h5>
-  <p>Productos</p>
-  </div>
-
-  <div>
-    <h5>{{ ('$' + (getProfits() | number:'1.0-0')).replace(',', '.') }}</h5>
-
-
-  <p>Gastado</p>
-  </div>
- </ion-card>
-
-
-
-
+  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center">
+    <div>
+      <h5>{{ products.length }}</h5>
+      <p>Productos</p>
+    </div>
+    <div>
+      <h5>{{ ('$' + (getProfits() | number:'1.0-0')).replace(',', '.') }}</h5>
+      <p>Gastado</p>
+    </div>
+  </ion-card>
 
   <!-- Buscador -->
   <ion-searchbar color="white" placeholder="Buscar"></ion-searchbar>
 
-  <!-- Grilla de Cards (puedes agregar más si es necesario) -->
-<ion-content>
+  <!-- Grilla de Cards -->
   <ion-grid>
     <ion-row>
       <ion-col>
         <ion-card>
-          <ion-card-header mode="ios" color="secondary" >
-            <ion-card-title  >Mis Compras</ion-card-title>
-            <ion-card-subtitle>compras realizadas en el mes de octubre</ion-card-subtitle>
+          <ion-card-header mode="ios" color="secondary">
+            <ion-card-title>Mis Compras</ion-card-title>
+            <ion-card-subtitle>Compras realizadas en el mes de octubre</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-           <ion-list>
-            <ion-item-sliding class="product-item" *ngFor="let p of products" >
-              <ion-item>
-                <ion-avatar slot="start">
-                  <img [src]="p.image" />
-                </ion-avatar>
-
-                <ion-label>
-                  <div class="name">{{p.name}}</div>
-                  <div class="data">
-                    <strong>Precio:</strong> {{ (p.price | currency:'USD':'symbol':'1.0-0').replace(',', '.') }} <br>
-
-                    <strong>Unidades compradas:</strong> {{p.soldUnits}} <br>
-                  </div>
-                  <ion-chip color="primary" mode="ios" outline="true">
-                    <ion-label> Total Gastado : {{ (p.price * p.soldUnits | currency:'USD':'symbol':'1.0-0').replace(',', '.') }}</ion-label>
-
-                  </ion-chip>
-
-                </ion-label>
-
-              </ion-item>
-
-
-         
-
-
-
-
-
-
-              <ion-item-options >
-                <ion-item-option (click)="addUpdateProduct(p)">
-                  <ion-icon class="option-btn" name="create-outline"></ion-icon>
-                 </ion-item-option>
-   
-                 <ion-item-option (click)="deleteProduct(p)"  color="danger"  >
-                   <ion-icon class="option-btn"  name="trash-outline"></ion-icon>
+            <ion-list>
+              <ion-item-sliding class="product-item" *ngFor="let p of products">
+                <ion-item>
+                  <ion-avatar slot="start">
+                    <img [src]="p.image" />
+                  </ion-avatar>
+                  <ion-label>
+                    <div class="name">{{ p.name }}</div>
+                    <div class="data">
+                      <strong>Precio:</strong> {{ (p.price | currency:'USD':'symbol':'1.0-0').replace(',', '.') }} <br>
+                      <strong>Unidades compradas:</strong> {{ p.soldUnits }} <br>
+                    </div>
+                    <ion-chip color="primary" mode="ios" outline="true">
+                      <ion-label>Total Gastado: {{ (p.price * p.soldUnits | currency:'USD':'symbol':'1.0-0').replace(',', '.') }}</ion-label>
+                    </ion-chip>
+                  </ion-label>
+                </ion-item>
+                <ion-item-options>
+                  <ion-item-option (click)="addUpdateProduct(p)">
+                    <ion-icon class="option-btn" name="create-outline"></ion-icon>
                   </ion-item-option>
-               </ion-item-options>
-
-            </ion-item-sliding>
-
-           </ion-list>
+                  <ion-item-option (click)="deleteProduct(p)" color="danger">
+                    <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <!-- Puedes añadir más columnas aquí según sea necesario -->
     </ion-row>
   </ion-grid>
-</ion-content>
 
-</ion-content>
-
-<!-- Botón para agtregar productos  -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addUpdateProduct()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
- <!-- Barcode List -->
- <ion-list>
-  <ion-item *ngFor="let barcode of barcodes">
-    <ion-label position="stacked">{{ barcode.format }}</ion-label>
-    <ion-input type="text" [value]="barcode.rawValue"></ion-input>
-  </ion-item>
-</ion-list>
-
-<!-- Floating Action Button for Scanning (only for mobile) -->
-<ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="!isWeb">
-  <ion-fab-button (click)="scan()" [disabled]="!isSupported">
-    <ion-icon name="scan"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<!-- QR Scanner for Web  -->
-<ng-container *ngIf="isWeb">
-  <div class="scanner-container">
-    <ngx-scanner-qrcode [config]="config" (onDecode)="scanResult($event)" #action="scanner"></ngx-scanner-qrcode>
-
-    <!-- Loading Message -->
-    <p *ngIf="action.isLoading">⌛ Loading...</p>
-  </div>
-
-  <!-- Start/Stop Button -->
-  <div class="button-scan">
-    <ion-fab-button (click)="action.isStart ? action.stop() : action.start()" class="custom-fab-button">
-      {{ action.isStart ? 'Stop' : 'Start' }}
+  <!-- Botón para agregar productos -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdateProduct()">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-  </div>
-</ng-container>
+  </ion-fab>
+
+  <!-- Listado de Códigos QR -->
+  <ion-list>
+    <ion-item *ngFor="let barcode of barcodes">
+      <ion-label position="stacked">{{ barcode.format }}</ion-label>
+      <ion-input type="text" [value]="barcode.rawValue"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- QR Scanner para Web -->
+  <ng-container *ngIf="isWeb">
+    <div class="scanner-container">
+      <ngx-scanner-qrcode [config]="config" (onDecode)="scanResult($event)" #action="scanner"></ngx-scanner-qrcode>
+      <p *ngIf="action.isLoading">⌛ Loading...</p>
+    </div>
+    <div class="button-scan">
+      <ion-fab-button (click)="action.isStart ? action.stop() : action.start()" class="custom-fab-button">
+        {{ action.isStart ? 'Stop' : 'Start' }}
+      </ion-fab-button>
+    </div>
+  </ng-container>
+</ion-content>
+
+
+<!-- Footer -->
 <ion-footer>
   <ion-toolbar>
     <ion-title>CheckMyStock V1.0</ion-title>
